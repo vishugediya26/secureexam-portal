@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Exams</h2>
+<a href="{{ url_for('exams.new_exam') }}" class="btn btn-primary mb-3">+ New Exam</a>
+<table class="table table-bordered">
+  <thead>
+    <tr><th>Subject</th><th>Scheduled Start</th><th>Duration (min)</th></tr>
+  </thead>
+  <tbody>
+    {% for exam in exams %}
+    <tr>
+      <td>{{ exam.subject }}</td>
+      <td>{{ exam.scheduled_start }}</td>
+      <td>{{ exam.duration_minutes }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
