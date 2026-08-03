@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Paper #{{ paper.id }} — {{ exam.subject }}</h2>
+<p><strong>Uploaded:</strong> {{ paper.uploaded_at }}</p>
+<div class="card">
+  <div class="card-body">
+    <pre style="white-space: pre-wrap;">{{ decrypted_content }}</pre>
+  </div>
+</div>
+<a href="{{ url_for('exams.list_papers', exam_id=exam.id) }}" class="btn btn-secondary mt-3">Back to Papers</a>
+{% endblock %}

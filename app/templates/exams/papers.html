@@ -2,13 +2,14 @@
 {% block content %}
 <h2>Papers for {{ exam.subject }}</h2>
 <table class="table table-bordered">
-  <thead><tr><th>Paper ID</th><th>Uploaded At</th><th>Encrypted Size (bytes)</th></tr></thead>
+  <thead><tr><th>Paper ID</th><th>Uploaded At</th><th>Encrypted Size (bytes)</th><th>Actions</th></tr></thead>
   <tbody>
     {% for paper in papers %}
     <tr>
       <td>{{ paper.id }}</td>
       <td>{{ paper.uploaded_at }}</td>
       <td>{{ paper.encrypted_content|length }}</td>
+      <td><a href="{{ url_for('exams.view_paper', exam_id=exam.id, paper_id=paper.id) }}" class="btn btn-sm btn-outline-success">View (Decrypt)</a></td>
     </tr>
     {% endfor %}
   </tbody>

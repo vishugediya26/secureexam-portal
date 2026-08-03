@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from datetime import datetime
 from app import db
 from app.models import Exam, Paper
-from app.crypto_utils import encrypt_text
+from app.crypto_utils import encrypt_text, decrypt_text
 
 exams_bp = Blueprint('exams', __name__)
 
@@ -40,3 +40,10 @@ def list_papers(exam_id):
     exam = Exam.query.get_or_404(exam_id)
     papers = Paper.query.filter_by(exam_id=exam.id).all()
     return render_template('exams/papers.html', exam=exam, papers=papers)
+
+@exams_bp.route('/exams/<int:exam_id>/papers/<int:paper_id>/view')
+def view_paper(exam_id, paper_id):
+    exam = Exam.query.get_or_404(exam_id)
+    paper = Paper.query.get_or_404(paper_id)
+    decrypted_content = decrypt_text(paper.encrypted_content)
+    return render_template('exams/view_paper.html', exam=exam, paper=paper, decrypted_content=decrypted_content)
