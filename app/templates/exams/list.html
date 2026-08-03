@@ -4,7 +4,7 @@
 <a href="{{ url_for('exams.new_exam') }}" class="btn btn-primary mb-3">+ New Exam</a>
 <table class="table table-bordered">
   <thead>
-    <tr><th>Subject</th><th>Scheduled Start</th><th>Duration (min)</th></tr>
+    <tr><th>Subject</th><th>Scheduled Start</th><th>Duration (min)</th><th>Actions</th></tr>
   </thead>
   <tbody>
     {% for exam in exams %}
@@ -12,6 +12,10 @@
       <td>{{ exam.subject }}</td>
       <td>{{ exam.scheduled_start }}</td>
       <td>{{ exam.duration_minutes }}</td>
+      <td>
+        <a href="{{ url_for('exams.upload_paper', exam_id=exam.id) }}" class="btn btn-sm btn-outline-primary">Upload Paper</a>
+        <a href="{{ url_for('exams.list_papers', exam_id=exam.id) }}" class="btn btn-sm btn-outline-secondary">View Papers</a>
+      </td>
     </tr>
     {% endfor %}
   </tbody>

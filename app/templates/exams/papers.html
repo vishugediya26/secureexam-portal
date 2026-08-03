@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Papers for {{ exam.subject }}</h2>
+<table class="table table-bordered">
+  <thead><tr><th>Paper ID</th><th>Uploaded At</th><th>Encrypted Size (bytes)</th></tr></thead>
+  <tbody>
+    {% for paper in papers %}
+    <tr>
+      <td>{{ paper.id }}</td>
+      <td>{{ paper.uploaded_at }}</td>
+      <td>{{ paper.encrypted_content|length }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
