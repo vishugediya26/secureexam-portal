@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from datetime import datetime
 from app import db
+from app.crypto_utils import encrypt_text, decrypt_text
 from app.models import Exam, Paper
 from app.audit import log_access
 from app.models import AuditLog
