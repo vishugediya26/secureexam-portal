@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, abort
 from datetime import datetime
 from app import db
 from flask_login import login_required, current_user
@@ -51,9 +51,18 @@ def list_papers(exam_id):
     return render_template('exams/papers.html', exam=exam, papers=papers)
 
 @exams_bp.route('/exams/<int:exam_id>/papers/<int:paper_id>/view')
+@login_required
 def view_paper(exam_id, paper_id):
     exam = Exam.query.get_or_404(exam_id)
     paper = Paper.query.get_or_404(paper_id)
+
+    is_owner = (paper.setter_id == current_user.id)
+    is_coordinator = (current_user.role == 'coordinator')
+
+    if not (is_owner or is_coordinator):
+        log_access(user_id=current_user.id, action='ACCESS_DENIED', paper_id=paper.id)
+        abort(403)
+
     decrypted_content = decrypt_text(paper.encrypted_content)
     log_access(user_id=current_user.id, action='VIEW_PAPER', paper_id=paper.id)
     return render_template('exams/view_paper.html', exam=exam, paper=paper, decrypted_content=decrypted_content)
