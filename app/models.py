@@ -28,3 +28,22 @@ class AuditLog(db.Model):
     paper_id = db.Column(db.Integer, db.ForeignKey('paper.id'))
     ip_address = db.Column(db.String(45))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    
+class Faculty(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=True, nullable=False)
+    duty_count = db.Column(db.Integer, default=0)
+
+class FacultyBusySlot(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    faculty_id = db.Column(db.Integer, db.ForeignKey('faculty.id'), nullable=False)
+    subject = db.Column(db.String(120))
+    day = db.Column(db.String(20))
+    start_time = db.Column(db.Time, nullable=False)
+    end_time = db.Column(db.Time, nullable=False)
+
+class DutyAssignment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    faculty_id = db.Column(db.Integer, db.ForeignKey('faculty.id'), nullable=False)
+    exam_id = db.Column(db.Integer, db.ForeignKey('exam.id'), nullable=False)
+    assigned_at = db.Column(db.DateTime, default=datetime.utcnow)

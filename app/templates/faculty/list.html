@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Faculty</h2>
+<a href="{{ url_for('faculty.upload_timetable') }}" class="btn btn-primary mb-3">Upload Timetable CSV</a>
+<table class="table table-bordered">
+  <thead><tr><th>Name</th><th>Duty Count</th><th>Busy Slots</th></tr></thead>
+  <tbody>
+    {% for f in all_faculty %}
+    <tr>
+      <td>{{ f.name }}</td>
+      <td>{{ f.duty_count }}</td>
+      <td>
+        {% for slot in f.facultybusyslot_query if false %}{% endfor %}
+        {{ f.name }}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
