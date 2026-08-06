@@ -2,8 +2,8 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from datetime import datetime
 from app import db
 from app.models import Exam, Paper
-from app.crypto_utils import encrypt_text, decrypt_text
-
+from app.audit import log_access
+from app.models import AuditLog
 exams_bp = Blueprint('exams', __name__)
 
 @exams_bp.route('/exams')
@@ -32,6 +32,7 @@ def upload_paper(exam_id):
         paper = Paper(exam_id=exam.id, setter_id=1, encrypted_content=encrypted)
         db.session.add(paper)
         db.session.commit()
+        log_access(user_id=1, action='UPLOAD_PAPER', paper_id=paper.id)
         return redirect(url_for('exams.list_papers', exam_id=exam.id))
     return render_template('exams/upload_paper.html', exam=exam)
 
@@ -46,4 +47,10 @@ def view_paper(exam_id, paper_id):
     exam = Exam.query.get_or_404(exam_id)
     paper = Paper.query.get_or_404(paper_id)
     decrypted_content = decrypt_text(paper.encrypted_content)
+    log_access(user_id=1, action='VIEW_PAPER', paper_id=paper.id)
     return render_template('exams/view_paper.html', exam=exam, paper=paper, decrypted_content=decrypted_content)
+
+@exams_bp.route('/audit-log')
+def audit_log():
+    logs = AuditLog.query.order_by(AuditLog.timestamp.desc()).all()
+    return render_template('audit_log.html', logs=logs)
