@@ -3,9 +3,11 @@ from datetime import datetime
 from app import db
 from app.models import AuditLog
 
-def log_access(user_id, action, paper_id=None):
+
+def log_access(user_id, action, paper_id=None, username=None):
     entry = AuditLog(
         user_id=user_id,
+        username=username,
         action=action,
         paper_id=paper_id,
         ip_address=request.remote_addr,

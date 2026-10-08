@@ -23,16 +23,18 @@ class Paper(db.Model):
 
 class AuditLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    username = db.Column(db.String(80))
     action = db.Column(db.String(50))
-    paper_id = db.Column(db.Integer, db.ForeignKey('paper.id'))
+    paper_id = db.Column(db.Integer, db.ForeignKey('paper.id'), nullable=True)
     ip_address = db.Column(db.String(45))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    
+
 class Faculty(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True, nullable=False)
     duty_count = db.Column(db.Integer, default=0)
+    busyslots = db.relationship('FacultyBusySlot', backref='faculty')
 
 class FacultyBusySlot(db.Model):
     id = db.Column(db.Integer, primary_key=True)

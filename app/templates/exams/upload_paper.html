@@ -2,6 +2,7 @@
 {% block content %}
 <h2>Upload Paper for {{ exam.subject }}</h2>
 <form method="POST">
+   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <div class="mb-3">
     <label class="form-label">Question Paper Content</label>
     <textarea name="content" class="form-control" rows="8" required></textarea>

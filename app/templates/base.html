@@ -12,10 +12,18 @@
         <a href="/exams" class="btn btn-outline-light btn-sm ms-3">Exams</a>
         <a href="/audit-log" class="btn btn-outline-light btn-sm ms-2">Audit Log</a>
         <a href="/faculty" class="btn btn-outline-light btn-sm ms-2">Faculty</a>
+        <a href="/faculty/duty-chart" class="btn btn-outline-light btn-sm ms-2">Duty Chart</a>
         <a href="/logout" class="btn btn-outline-danger btn-sm ms-2">Logout</a>
         </div>
     </nav>
-    <div class="container mt-4">
+       <div class="container mt-4">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-info">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
         {% block content %}{% endblock %}
     </div>
 </body>

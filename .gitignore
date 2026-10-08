@@ -4,3 +4,6 @@ venv/
    .env
    instance/
    *.db
+      bandit_report.txt
+   pip_audit_report.txt
+   

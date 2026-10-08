@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Duty Chart</h2>
+<table class="table table-bordered">
+  <thead>
+    <tr><th>Exam</th><th>Date and Time</th><th>Duration (min)</th><th>Invigilators</th></tr>
+  </thead>
+  <tbody>
+    {% for row in chart %}
+    <tr>
+      <td>{{ row.exam.subject }}</td>
+      <td>{{ row.exam.scheduled_start.strftime('%a, %d %b %Y %H:%M') }}</td>
+      <td>{{ row.exam.duration_minutes }}</td>
+      <td>
+        {% if row.faculty_names %}
+          {% for name in row.faculty_names %}
+            <span class="badge bg-success">{{ name }}</span>
+          {% endfor %}
+        {% else %}
+          <span class="text-muted">Not assigned</span>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -2,14 +2,14 @@
 {% block content %}
 <h2>Audit Log</h2>
 <table class="table table-bordered">
-  <thead><tr><th>Timestamp</th><th>User ID</th><th>Action</th><th>Paper ID</th><th>IP Address</th></tr></thead>
+  <thead><tr><th>Time (IST)</th><th>User</th><th>Action</th><th>Paper ID</th><th>IP Address</th></tr></thead>
   <tbody>
     {% for entry in logs %}
     <tr>
-      <td>{{ entry.timestamp }}</td>
-      <td>{{ entry.user_id }}</td>
+      <td>{{ (entry.timestamp + timedelta(hours=5, minutes=30)).strftime('%d %b %Y %H:%M:%S') }}</td>
+      <td>{{ entry.username or ('User #' ~ entry.user_id) }}</td>
       <td>{{ entry.action }}</td>
-      <td>{{ entry.paper_id }}</td>
+      <td>{{ entry.paper_id or '-' }}</td>
       <td>{{ entry.ip_address }}</td>
     </tr>
     {% endfor %}

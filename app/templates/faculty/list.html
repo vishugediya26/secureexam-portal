@@ -10,9 +10,12 @@
       <td>{{ f.name }}</td>
       <td>{{ f.duty_count }}</td>
       <td>
-        {% for slot in f.facultybusyslot_query if false %}{% endfor %}
-        {{ f.name }}
-      </td>
+  {% for slot in f.busyslots %}
+    <span class="badge bg-secondary">{{ slot.subject }} ({{ slot.day }} {{ slot.start_time }}–{{ slot.end_time }})</span>{% if not loop.last %}<br>{% endif %}
+  {% else %}
+    <span class="text-muted">None</span>
+  {% endfor %}
+</td>
     </tr>
     {% endfor %}
   </tbody>

@@ -1,11 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>Upload Faculty Timetable</h2>
-{% with messages = get_flashed_messages() %}
-  {% if messages %}<div class="alert alert-info">{{ messages[0] }}</div>{% endif %}
-{% endwith %}
+
 <p class="text-muted">CSV columns required: faculty_name, subject, day, start_time (HH:MM), end_time (HH:MM)</p>
 <form method="POST" enctype="multipart/form-data">
+   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <div class="mb-3">
     <input type="file" name="csv_file" accept=".csv" class="form-control" required>
   </div>

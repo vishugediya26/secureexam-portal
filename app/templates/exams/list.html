@@ -13,8 +13,13 @@
       <td>{{ exam.scheduled_start }}</td>
       <td>{{ exam.duration_minutes }}</td>
       <td>
-        <a href="{{ url_for('exams.upload_paper', exam_id=exam.id) }}" class="btn btn-sm btn-outline-primary">Upload Paper</a>
+       <a href="{{ url_for('exams.upload_paper', exam_id=exam.id) }}" class="btn btn-sm btn-outline-primary">Upload Paper</a>
         <a href="{{ url_for('exams.list_papers', exam_id=exam.id) }}" class="btn btn-sm btn-outline-secondary">View Papers</a>
+        <form method="POST" action="{{ url_for('faculty.assign_duty', exam_id=exam.id) }}" style="display:inline;">
+             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="number" name="num_invigilators" value="1" min="1" max="10" class="form-control form-control-sm d-inline-block" style="width:70px;" title="Number of invigilators">
+          <button type="submit" class="btn btn-sm btn-outline-success">Assign Duty</button>
+        </form>
       </td>
     </tr>
     {% endfor %}
